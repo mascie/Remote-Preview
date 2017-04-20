@@ -25,10 +25,39 @@
         left: 0;
         top: 0;
       }
+      .ios iframe {
+        width: 1px;
+        min-width: 100%;
+        *width: 100%;
+      }
     </style>
     <script src="jquery.js"></script>
     <script>
       /*global $ */
+
+      /**
+       * Create an iframe with initial scrolling disabled on iOS
+       * http://stackoverflow.com/questions/23083462/how-to-get-an-iframe-to-be-responsive-in-ios-safari
+       */
+      function createIframe() {
+        var wrapper = jQuery('body');
+        if(navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+          wrapper.addClass('ios');
+          var scrolling = 'no';
+        } else {
+          var scrolling = 'yes';
+        }
+        url = "http://h4kyJlNpMcZtxgaXlu1ifC.com"
+        jQuery('<iframe>', {
+          src: url,
+          /*sandbox: 'allow-same-origin allow-forms allow-scripts',*/
+          frameborder: 0,
+          scrolling: scrolling,
+          marginheight: 0,
+          marginwidth: 0
+        }).appendTo(wrapper);
+      }
+      $(createIframe);
 
       /**
        * Check if it's an URL.
@@ -96,6 +125,6 @@
     </script>
   </head>
   <body>
-    <iframe src="http://h4kyJlNpMcZtxgaXlu1ifC.com" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0"></iframe>
+    <!-- iframe added by jQuery with initial scrolling disabled on iOS -->
   </body>
 </html>
